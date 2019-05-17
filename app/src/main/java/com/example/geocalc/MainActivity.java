@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         p1Latitude = findViewById(R.id.p1LatInput);
-        p1Longitude = findViewById(R.id.p1LongInput);   //connecting the view input fields to the logical input fields
+        p1Longitude = findViewById(R.id.p1LongInput);   //connecting the view input fields to the variable fields
         p2Latitude = findViewById(R.id.p2LatInput);
         p2Longitude = findViewById(R.id.p2LongInput);
         btnCalculate = findViewById(R.id.btnCalc);       //connecting the buttons to the view buttons
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
        });
 
+        //onClick listener that calculates bearing
         btnClear.setOnClickListener(v -> {
            p1Latitude.setText("");
            p1Longitude.setText("");          //set input fields to blank
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
     }
 
     @Override
