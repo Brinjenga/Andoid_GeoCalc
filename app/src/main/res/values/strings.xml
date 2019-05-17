@@ -10,4 +10,12 @@
     <string name="title_activity_my_settings">My Settings</string>
     <string name="lblDistance">Distance</string>
     <string name="lblBearing">Bearing</string>
+     <array name="dOptions">
+        <item>"Kilometers"</item>
+         <item>"Miles"</item>
+     </array>
+    <array name="bOptions">
+        <item>"Degrees"</item>
+        <item>Mils</item>
+    </array>
 </resources>

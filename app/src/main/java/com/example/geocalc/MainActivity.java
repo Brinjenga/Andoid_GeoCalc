@@ -1,5 +1,6 @@
 package com.example.geocalc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     EditText p1Latitude,p1Longitude,p2Latitude,p2Longitude;   // instantiating input fields
     Button btnCalculate,btnClear;    // instantiating buttons
     TextView distanceResult,bearingResult;   // instantiating labels
+    public static final int Dunits = 1; //value to return after distance units selection
+    public static final int Bunits = 1; //value to return after bearing units selection
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this,MySettings.class);
+            startActivity(intent);
+            finish();
             return true;
         }
 
