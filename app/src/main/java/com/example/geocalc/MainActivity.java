@@ -7,8 +7,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    // instantiating input fields
+    EditText p1Latitude,p1Longitude,p2Latitude,p2Longitude;
+
+     // instantiating buttons
+     Button btnCalculate,btnClear;
+
+    // instantiating labels
+    TextView distanceResult,bearingResult;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +30,50 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       TextInput = findViewById(R.id.p1LatInput);
+        //connecting the view input fields to the logical input fields
+        p1Latitude = findViewById(R.id.p1LatInput);
+        p1Longitude = findViewById(R.id.p1LongInput);
+        p2Latitude = findViewById(R.id.p2LatInput);
+        p2Longitude = findViewById(R.id.p1LongInput);
+
+        //connecting the buttons to the view buttons
+        btnCalculate = findViewById(R.id.btnCalc);
+
+        //connecting the outputs to the view labels
+        distanceResult = findViewById(R.id.lblDistance);
+        bearingResult = findViewById(R.id.lblBearing);
+
+          //onClick listener that calculates distance
+           btnCalculate.setOnClickListener(v -> {
+
+            //check that input fields are not empty
+            if(p1Latitude.length()==0 & p1Longitude.length()==0
+                    & p2Latitude.length()==0 & p2Longitude.length()==0){
+                p1Latitude.setText("Cannot be blank");
+                p1Longitude.setText("Cannot be blank");
+                p2Latitude.setText("Cannot be blank");
+                p2Longitude.setText("Cannot be blank");
+            }else{
+
+                //get longitude and latitude inputs
+                Double p1Lat = Double.valueOf(p1Latitude.getText().toString());
+                Double p1Long = Double.valueOf(p1Longitude.getText().toString());
+                Double p2lat = Double.valueOf(p2Latitude.getText().toString());
+                Double p2long = Double.valueOf(p2Longitude.getText().toString());
+
+                //calculate distance
+               double Distance = DistanceCalculator.distance(p1Lat,p1Long,p2lat,p2long,"");
+
+               //display Distance on Label
+               distanceResult.setText(Double.toString(Distance));
+
+            }
 
 
-        public void sendMessage(View view) {
 
-        }
+
+       });
+
     }
 
     @Override
