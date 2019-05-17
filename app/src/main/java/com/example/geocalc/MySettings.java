@@ -24,7 +24,6 @@ public class MySettings extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }
