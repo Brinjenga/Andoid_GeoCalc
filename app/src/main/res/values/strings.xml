@@ -8,14 +8,14 @@
     <string name="btnCalc">Calculate</string>
     <string name="btnClear">Clear</string>
     <string name="title_activity_my_settings">My Settings</string>
-    <string name="lblDistance">Distance</string>
-    <string name="lblBearing">Bearing</string>
+    <string name="lblDistance">Distance:</string>
+    <string name="lblBearing">Bearing:</string>
      <array name="dOptions">
         <item>"Kilometers"</item>
          <item>"Miles"</item>
      </array>
     <array name="bOptions">
         <item>"Degrees"</item>
-        <item>Mils</item>
+        <item>"Mils"</item>
     </array>
 </resources>
