@@ -9,29 +9,86 @@
     tools:showIn="@layout/activity_main">
 
     <EditText
-        android:id="@+id/editText2"
-        android:layout_width="154dp"
-        android:layout_height="35dp"
+        android:id="@+id/p1LongInput"
+        android:layout_width="177dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/p2LongInput"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/p2LatInput"
+        app:layout_constraintTop_toBottomOf="@+id/p1LongInput2" />
+
+    <EditText
+        android:id="@+id/p1LongInput2"
+        android:layout_width="177dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
+        android:hint="@string/p2LongInput"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toEndOf="@+id/editText3"
+        app:layout_constraintStart_toEndOf="@+id/p1LatInput"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText3"
-        android:layout_width="154dp"
-        android:layout_height="35dp"
+        android:id="@+id/p1LatInput"
+        android:layout_width="177dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
+        android:hint="@string/p1LatInput"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/p1LongInput2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/p2LatInput"
+        android:layout_width="177dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/p2LatInput"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/p1LongInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/p1LatInput" />
+
+    <Button
+        android:id="@+id/btnCalc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/btnCalc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/p2LatInput" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="99dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/btnClear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.168"
+        app:layout_constraintStart_toEndOf="@+id/btnCalc"
+        app:layout_constraintTop_toBottomOf="@+id/p1LongInput" />
 </android.support.constraint.ConstraintLayout>

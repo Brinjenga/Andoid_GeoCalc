@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">GeoCalc</string>
     <string name="action_settings">Settings</string>
+    <string name="p1LatInput">Enter Latitude for P1</string>
+    <string name="p2LongInput">Enter Longitude for P2</string>
+    <string name="p2LatInput">Enter Latitude for P2</string>
+    <string name="p2LongitudeInput">Enter Longitude for p2</string>
+    <string name="btnCalc">Calculate</string>
+    <string name="btnClear">Clear</string>
+    <string name="title_activity_my_settings">My Settings</string>
 </resources>
