@@ -24,12 +24,15 @@ public class MySettings extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab =  findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            Intent intent = new Intent();
-            intent.putExtra("dOptions",optionKm);
-            intent.putExtra("bOptions",optionDegrees);
-            setResult(MainActivity.Dunits);
-            finish();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent();
+                intent.putExtra("dOptions",optionKm);
+                intent.putExtra("bOptions",optionDegrees);
+                setResult(MainActivity.code,intent);
+                finish();
+            }
         });
 
         Spinner distanceUnits,bearingUnits;

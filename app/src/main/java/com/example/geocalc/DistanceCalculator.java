@@ -1,7 +1,7 @@
 package com.example.geocalc;
-
+//distance in km
 public class DistanceCalculator {
-        public static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
+        public static double distance(double lat1, double lon1, double lat2, double lon2) {
             if ((lat1 == lat2) && (lon1 == lon2)) {
                 return 0;
             }
@@ -11,11 +11,7 @@ public class DistanceCalculator {
                 dist = Math.acos(dist);
                 dist = Math.toDegrees(dist);
                 dist = dist * 60 * 1.1515;
-                if (unit == "K") {
-                    dist = dist * 1.609344;
-                } else if (unit == "N") {
-                    dist = dist * 0.8684;
-                }
+                dist = dist * 1.609344;
                 return (dist);
             }
         }
