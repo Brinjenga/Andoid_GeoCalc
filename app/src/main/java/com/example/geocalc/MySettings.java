@@ -13,7 +13,7 @@ import android.widget.Spinner;
 
 public class MySettings extends AppCompatActivity {
 
-        private String optionKm = "Miles";    //default distance selection
+        private String optionKm = "Kilometers";    //default distance selection
         private String optionDegrees = "Degrees";      // default bearing selection
 
     @Override
@@ -22,6 +22,12 @@ public class MySettings extends AppCompatActivity {
         setContentView(R.layout.activity_my_settings);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle extras = getIntent().getExtras();
+        if (null != extras) {
+            optionKm = extras.getString("distUnits");
+            optionDegrees = extras.getString("bearUnits");
+        }
 
         FloatingActionButton fab =  findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
@@ -71,6 +77,15 @@ public class MySettings extends AppCompatActivity {
 
             }
         });
+
+        /* If reading this, please forgive the horrible code practiced here. When doing HW,
+         * you have only so much time to do things right. */
+        if(optionKm.compareTo("Miles") == 0 ){
+            distanceUnits.setSelection(1);
+        }
+        if(optionDegrees.compareTo("Mils") == 0 ){
+            bearingUnits.setSelection(1);
+        }
     }
 
 }

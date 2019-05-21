@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int code = 1; //value to return after distance units selection
     Double Distance;
     Double Bearing;
+    String distUnits, bearUnits;
 
 
     @Override
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         distanceResult = findViewById(R.id.lblDistance);
         bearingResult = findViewById(R.id.lblBearing);   //connecting the outputs to the view labels
 
+        distUnits = "Kilometers";
+        bearUnits = "Degrees";
 
         //onClick listener that calculates distance
         btnCalculate.setOnClickListener(v -> {
@@ -51,14 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 double p1Long = Double.valueOf(p1Longitude.getText().toString());
                 double p2lat = Double.valueOf(p2Latitude.getText().toString());
                 double p2long = Double.valueOf(p2Longitude.getText().toString());
-                DecimalFormat f = new DecimalFormat("#.##");              //trim doubles to 2 decimal places
-
-
                 Distance = DistanceCalculator.distance(p1Lat, p1Long, p2lat, p2long);   //calculate distance in km
-                distanceResult.setText("Distance: " + f.format(Distance) + " Kilometers");        //display Distance on Label
-
-                Bearing = BearingCalculator.bearing(p1Lat, p1Long, p2lat, p2long);    //calculate bearing
-                bearingResult.setText("Bearing: " + f.format(Bearing) + " Degrees");               //display Bearing on Label
+                Bearing = BearingCalculator.bearing(p1Lat, p1Long, p2lat, p2long);    //calculate bearing in deg
+                updateCalcs();
             }
         });
 
@@ -71,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             distanceResult.setText("Distance: ");   //set labels back to original text
             bearingResult.setText("Bearing: ");
         });
-
     }
 
 
@@ -93,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(MainActivity.this, MySettings.class);
+            intent.putExtra("distUnits", distUnits);
+            intent.putExtra("bearUnits", bearUnits);
             startActivityForResult(intent, code);
             return true;
         }
@@ -102,25 +101,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        DecimalFormat f = new DecimalFormat("#.##");
-        String dunits="";
-        String bunits="";
         if (resultCode == code) {
-            dunits = data.getStringExtra("dOptions");
-            bunits = data.getStringExtra("bOptions");
-            if(dunits.compareTo("Miles") == 0 ){
-                Double distance= Distance * 0.621371;
-                distanceResult.setText("Distance: " + f.format(distance) + " " + dunits);
-            }else{
-                distanceResult.setText("Distance: " + f.format(Distance) + " " + dunits);
-            }
-            if(bunits.compareTo("Mils") == 0 ){
-                Double bearing= Bearing * 17.777777777778;
-                bearingResult.setText(f.format(bearing) + " " + bunits);
-            }else{
-                bearingResult.setText(f.format(Bearing) + " " + bunits);
-            }
+            distUnits = data.getStringExtra("dOptions");
+            bearUnits = data.getStringExtra("bOptions");
+            updateCalcs();
+        }
+    }
 
+    private void updateCalcs() {
+        DecimalFormat f = new DecimalFormat("#.##");
+        if(distUnits.compareTo("Miles") == 0 ){
+            Double distance= Distance * 0.621371;
+            distanceResult.setText("Distance: " + f.format(distance) + " " + distUnits);
+        }else{
+            distanceResult.setText("Distance: " + f.format(Distance) + " " + distUnits);
+        }
+        if(bearUnits.compareTo("Mils") == 0 ){
+            Double bearing= Bearing * 17.777777777778;
+            bearingResult.setText("Bearing: " + f.format(bearing) + " " + bearUnits);
+        }else{
+            bearingResult.setText("Bearing: " + f.format(Bearing) + " " + bearUnits);
         }
     }
 }
