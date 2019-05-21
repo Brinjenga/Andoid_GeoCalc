@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Distance = DistanceCalculator.distance(p1Lat, p1Long, p2lat, p2long);   //calculate distance in km
-                distanceResult.setText(f.format(Distance) + "Kilometers");        //display Distance on Label
+                distanceResult.setText(f.format(Distance) + " Kilometers");        //display Distance on Label
 
                 Bearing = BearingCalculator.bearing(p1Lat, p1Long, p2lat, p2long);    //calculate bearing
-                bearingResult.setText(f.format(Bearing) + "  " + "Degrees");               //display Bearing on Label
+                bearingResult.setText(f.format(Bearing) + " Degrees");               //display Bearing on Label
             }
         });
 
