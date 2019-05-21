@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 distanceResult.setText(f.format(Distance) + dunits);
             }
             if(bunits.compareTo("Mils") == 0 ){
-                Double bearing= Bearing * 17.777778;
+                Double bearing= Bearing * 17.777777777778;
                 bearingResult.setText(f.format(bearing) + bunits);
             }else{
                 bearingResult.setText(f.format(Bearing) + bunits);
