@@ -122,11 +122,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        else {
-                distanceResult.setText("Distance: " + f.format(Distance) +" " +  dunits);
-                bearingResult.setText(f.format(Distance) + " " + bunits);
-            }
-        }
     }
+}
 
 
