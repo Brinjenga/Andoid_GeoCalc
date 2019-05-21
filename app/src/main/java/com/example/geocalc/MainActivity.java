@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Distance = DistanceCalculator.distance(p1Lat, p1Long, p2lat, p2long);   //calculate distance in km
-                distanceResult.setText(f.format(Distance) + " Kilometers");        //display Distance on Label
+                distanceResult.setText("Distance: " + f.format(Distance) + " Kilometers");        //display Distance on Label
 
                 Bearing = BearingCalculator.bearing(p1Lat, p1Long, p2lat, p2long);    //calculate bearing
-                bearingResult.setText(f.format(Bearing) + " Degrees");               //display Bearing on Label
+                bearingResult.setText("Bearing: " + f.format(Bearing) + " Degrees");               //display Bearing on Label
             }
         });
 
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
             p1Longitude.setText("");          //set input fields to blank
             p2Latitude.setText("");
             p2Longitude.setText("");
-            distanceResult.setText("Distance");   //set labels back to original text
-            bearingResult.setText("Bearing");
+            distanceResult.setText("Distance: ");   //set labels back to original text
+            bearingResult.setText("Bearing: ");
         });
 
     }
@@ -110,21 +110,21 @@ public class MainActivity extends AppCompatActivity {
             bunits = data.getStringExtra("bOptions");
             if(dunits.compareTo("Miles") == 0 ){
                 Double distance= Distance * 0.621371;
-                distanceResult.setText(f.format(distance) + dunits);
+                distanceResult.setText("Distance: " + f.format(distance) + " " + dunits);
             }else{
-                distanceResult.setText(f.format(Distance) + dunits);
+                distanceResult.setText("Distance: " + f.format(Distance) + " " + dunits);
             }
             if(bunits.compareTo("Mils") == 0 ){
                 Double bearing= Bearing * 17.777777777778;
-                bearingResult.setText(f.format(bearing) + bunits);
+                bearingResult.setText(f.format(bearing) + " " + bunits);
             }else{
-                bearingResult.setText(f.format(Bearing) + bunits);
+                bearingResult.setText(f.format(Bearing) + " " + bunits);
             }
 
         }
         else {
-                distanceResult.setText(f.format(Distance) + dunits);
-                bearingResult.setText(f.format(Distance) + bunits);
+                distanceResult.setText("Distance: " + f.format(Distance) +" " +  dunits);
+                bearingResult.setText(f.format(Distance) + " " + bunits);
             }
         }
     }
