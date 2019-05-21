@@ -1,11 +1,14 @@
 package com.example.geocalc;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 Bearing = BearingCalculator.bearing(p1Lat, p1Long, p2lat, p2long);    //calculate bearing in deg
                 updateCalcs();
             }
+            closeKeyboard();
         });
 
         //onClick listener that clears  values
@@ -68,9 +72,17 @@ public class MainActivity extends AppCompatActivity {
             p2Longitude.setText("");
             distanceResult.setText("Distance: ");   //set labels back to original text
             bearingResult.setText("Bearing: ");
+            closeKeyboard();
         });
     }
 
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if(view !=null){
+            InputMethodManager inputM = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputM.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
