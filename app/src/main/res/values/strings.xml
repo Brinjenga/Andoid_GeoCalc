@@ -12,6 +12,8 @@
     <string name="lblBearing">Bearing:</string>
     <string name="Dtitle">Distance Unit</string>
     <string name="Btitle">Bearing Units</string>
+    <string name="Tired">Tired of typing?</string>
+    <string name="search">Search</string>
     <array name="dOptions">
         <item>Kilometers</item>
          <item>Miles</item>
