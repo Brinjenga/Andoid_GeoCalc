@@ -10,7 +10,9 @@
     <string name="title_activity_my_settings">My Settings</string>
     <string name="lblDistance">Distance:</string>
     <string name="lblBearing">Bearing:</string>
-     <array name="dOptions">
+    <string name="Dtitle">Distance Unit</string>
+    <string name="Btitle">Bearing Units</string>
+    <array name="dOptions">
         <item>Kilometers</item>
          <item>Miles</item>
      </array>

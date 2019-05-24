@@ -12,8 +12,8 @@
         android:id="@+id/btnCalc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/btnCalc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p2LatInput" />
@@ -22,30 +22,32 @@
         android:id="@+id/btnClear"
         android:layout_width="99dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/btnClear"
-        app:layout_constraintStart_toEndOf="@+id/btnCalc"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p2LongInput" />
 
     <EditText
         android:id="@+id/p1LatInput"
-        android:layout_width="177dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/p1LatInput"
         android:inputType="numberSigned|numberDecimal"
         android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/p1LongInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/p1LongInput"
-        android:layout_width="177dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
@@ -58,23 +60,25 @@
 
     <EditText
         android:id="@+id/p2LatInput"
-        android:layout_width="177dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/p2LatInput"
         android:inputType="numberSigned|numberDecimal"
         android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/p2LongInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p1LatInput" />
 
     <EditText
         android:id="@+id/p2LongInput"
-        android:layout_width="177dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/p2LongitudeInput"
@@ -86,21 +90,25 @@
 
     <TextView
         android:id="@+id/lblDistance"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/lblDistance"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCalc" />
 
     <TextView
         android:id="@+id/lblBearing"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="19dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/lblBearing"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblDistance" />
 </android.support.constraint.ConstraintLayout>
