@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
     Button btnCalculate, btnClear;    // instantiating buttons
     TextView distanceResult, bearingResult;   // creating label variables
     public static final int code = 1; //value to return after distance units selection
-    Double Distance;
-    Double Bearing;
     String distUnits, bearUnits;
 
 
@@ -46,21 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         //onClick listener that calculates distance
         btnCalculate.setOnClickListener(v -> {
-            if (p1Latitude.length() == 0 & p1Longitude.length() == 0
-                    & p2Latitude.length() == 0 & p2Longitude.length() == 0) {     //check that input fields are not empty
-                p1Latitude.setText("Cannot be blank");
-                p1Longitude.setText("Cannot be blank");
-                p2Latitude.setText("Cannot be blank");
-                p2Longitude.setText("Cannot be blank");
-            } else {
-                double p1Lat = Double.valueOf(p1Latitude.getText().toString());   //get longitude and latitude inputs
-                double p1Long = Double.valueOf(p1Longitude.getText().toString());
-                double p2lat = Double.valueOf(p2Latitude.getText().toString());
-                double p2long = Double.valueOf(p2Longitude.getText().toString());
-                Distance = DistanceCalculator.distance(p1Lat, p1Long, p2lat, p2long);   //calculate distance in km
-                Bearing = BearingCalculator.bearing(p1Lat, p1Long, p2lat, p2long);    //calculate bearing in deg
-                updateCalcs();
-            }
+            updateCalcs();
             closeKeyboard();
         });
 
@@ -121,18 +105,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateCalcs() {
-        DecimalFormat f = new DecimalFormat("#.##");
-        if(distUnits.compareTo("Miles") == 0 ){
-            Double distance= Distance * 0.621371;
-            distanceResult.setText("Distance: " + f.format(distance) + " " + distUnits);
-        }else{
-            distanceResult.setText("Distance: " + f.format(Distance) + " " + distUnits);
-        }
-        if(bearUnits.compareTo("Mils") == 0 ){
-            Double bearing= Bearing * 17.777777777778;
-            bearingResult.setText("Bearing: " + f.format(bearing) + " " + bearUnits);
-        }else{
-            bearingResult.setText("Bearing: " + f.format(Bearing) + " " + bearUnits);
+
+        if (p1Latitude.length() == 0 & p1Longitude.length() == 0
+                & p2Latitude.length() == 0 & p2Longitude.length() == 0) {     //check that input fields are not empty
+            /* Do nothing */
+        } else {
+            double p1Lat = Double.valueOf(p1Latitude.getText().toString());   //get longitude and latitude inputs
+            double p1Long = Double.valueOf(p1Longitude.getText().toString());
+            double p2lat = Double.valueOf(p2Latitude.getText().toString());
+            double p2long = Double.valueOf(p2Longitude.getText().toString());
+            double Distance = DistanceCalculator.distance(p1Lat, p1Long, p2lat, p2long);   //calculate distance in km
+            double Bearing = BearingCalculator.bearing(p1Lat, p1Long, p2lat, p2long);    //calculate bearing in deg
+
+            DecimalFormat f = new DecimalFormat("#.##");
+            if(distUnits.compareTo("Miles") == 0 ){
+                Double distance= Distance * 0.621371;
+                distanceResult.setText("Distance: " + f.format(distance) + " " + distUnits);
+            }else{
+                distanceResult.setText("Distance: " + f.format(Distance) + " " + distUnits);
+            }
+            if(bearUnits.compareTo("Mils") == 0 ){
+                Double bearing= Bearing * 17.777777777778;
+                bearingResult.setText("Bearing: " + f.format(bearing) + " " + bearUnits);
+            }else{
+                bearingResult.setText("Bearing: " + f.format(Bearing) + " " + bearUnits);
+            }
         }
     }
 }
