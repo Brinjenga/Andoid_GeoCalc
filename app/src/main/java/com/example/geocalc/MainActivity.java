@@ -12,6 +12,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.geocalc.dummy.HistoryContent;
+
+import org.joda.time.DateTime;
+
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnCalculate, btnClear;    // instantiating buttons
     TextView distanceResult, bearingResult;   // creating label variables
     public static final int code = 1; //value to return after distance units selection
+    public static int HISTORY_RESULT = 2;
     String distUnits, bearUnits;
 
 
@@ -44,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         //onClick listener that calculates distance
         btnCalculate.setOnClickListener(v -> {
-            updateCalcs();
+            // remember the calculation.
+            updateCalcs(true);
             closeKeyboard();
         });
 
@@ -90,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("bearUnits", bearUnits);
             startActivityForResult(intent, code);
             return true;
+        } else if(item.getItemId() == R.id.action_history) {
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+            startActivityForResult(intent, HISTORY_RESULT );
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -100,11 +111,18 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == code) {
             distUnits = data.getStringExtra("dOptions");
             bearUnits = data.getStringExtra("bOptions");
-            updateCalcs();
+            updateCalcs(false);
+        } else if (resultCode == HISTORY_RESULT) {
+            String[] vals = data.getStringArrayExtra("item");
+            this.p1Latitude.setText(vals[0]);
+            this.p1Longitude.setText(vals[1]);
+            this.p2Latitude.setText(vals[2]);
+            this.p2Longitude.setText(vals[3]);
+            this.updateCalcs(false);
         }
     }
 
-    private void updateCalcs() {
+    private void updateCalcs(boolean save) {
 
         if (p1Latitude.length() == 0 & p1Longitude.length() == 0
                 & p2Latitude.length() == 0 & p2Longitude.length() == 0) {     //check that input fields are not empty
@@ -114,6 +132,13 @@ public class MainActivity extends AppCompatActivity {
             double p1Long = Double.valueOf(p1Longitude.getText().toString());
             double p2lat = Double.valueOf(p2Latitude.getText().toString());
             double p2long = Double.valueOf(p2Longitude.getText().toString());
+            if (save) {
+                HistoryContent.HistoryItem item = new HistoryContent.HistoryItem(
+                        p1Latitude.getText().toString(), p1Longitude.getText().toString(),
+                        p2Latitude.getText().toString(), p2Longitude.getText().toString(),
+                        DateTime.now());
+                HistoryContent.addItem(item);
+            }
             double Distance = DistanceCalculator.distance(p1Lat, p1Long, p2lat, p2long);   //calculate distance in km
             double Bearing = BearingCalculator.bearing(p1Lat, p1Long, p2lat, p2long);    //calculate bearing in deg
 

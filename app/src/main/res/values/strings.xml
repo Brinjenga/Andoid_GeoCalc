@@ -16,10 +16,12 @@
     <string name="search">Search</string>
     <array name="dOptions">
         <item>Kilometers</item>
-         <item>Miles</item>
-     </array>
+        <item>Miles</item>
+    </array>
     <array name="bOptions">
         <item>Degrees</item>
         <item>Mils</item>
     </array>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="history_menu_name">History</string>
 </resources>
