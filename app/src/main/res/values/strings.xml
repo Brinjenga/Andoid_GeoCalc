@@ -24,4 +24,9 @@
     </array>
     <string name="title_activity_history">HistoryActivity</string>
     <string name="history_menu_name">History</string>
+    <string name="origination">Origination</string>
+    <string name="destination">Destination</string>
+    <string name="date_of_calculation">date of calculation</string>
+    <string name="todo">TODO</string>
+    <string name="textview">TextView</string>
 </resources>
