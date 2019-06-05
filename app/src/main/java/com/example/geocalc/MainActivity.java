@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.geocalc.dummy.HistoryContent;
+import com.google.android.libraries.places.api.Places;
 
 import org.joda.time.DateTime;
 
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Places.initialize(getApplicationContext(), BuildConfig.PLACES_API_KEY);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

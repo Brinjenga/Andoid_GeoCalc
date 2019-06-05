@@ -29,4 +29,10 @@
     <string name="date_of_calculation">date of calculation</string>
     <string name="todo">TODO</string>
     <string name="textview">TextView</string>
+    <string name="title_activity_location_search">Location Search</string>
+    <string name="location1_name">Location 1</string>
+    <string name="location2_name">Location 2</string>
+    <string name="date_hint">Date</string>
+    <string name="location_info">Location Information</string>
+    <string name="calc_date">Calculation Date</string>
 </resources>
