@@ -3,6 +3,7 @@ package com.example.geocalc;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,8 +18,13 @@ import com.example.geocalc.dummy.HistoryContent;
 import com.google.android.libraries.places.api.Places;
 
 import org.joda.time.DateTime;
+import org.parceler.Parcels;
 
 import java.text.DecimalFormat;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
     TextView distanceResult, bearingResult;   // creating label variables
     public static final int code = 1; //value to return after distance units selection
     public static int HISTORY_RESULT = 2;
+    public static int SEARCH_RESULT = 3;
     String distUnits, bearUnits;
 
+    @BindView(R.id.search_button) Button btnSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         btnClear = findViewById(R.id.btnClear);
         distanceResult = findViewById(R.id.lblDistance);
         bearingResult = findViewById(R.id.lblBearing);   //connecting the outputs to the view labels
+
+        ButterKnife.bind(this);
 
         distUnits = "Kilometers";
         bearUnits = "Degrees";
@@ -69,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
             bearingResult.setText("Bearing: ");
             closeKeyboard();
         });
+    }
+
+    @OnClick(R.id.search_button)
+    public void searchPressed() {
+        Intent intent = new Intent(MainActivity.this, LocationSearchActivity.class);
+        startActivityForResult(intent, SEARCH_RESULT);
     }
 
     private void closeKeyboard() {
@@ -123,6 +139,14 @@ public class MainActivity extends AppCompatActivity {
             this.p2Latitude.setText(vals[2]);
             this.p2Longitude.setText(vals[3]);
             this.updateCalcs(false);
+        } else if (requestCode == SEARCH_RESULT) {
+            Bundle extras = data.getExtras();
+            LocationLookup ll = Parcels.unwrap(extras.getParcelable("ll"));
+            this.p1Latitude.setText(String.valueOf(ll.origLat));
+            this.p1Longitude.setText(String.valueOf(ll.origLng));
+            this.p2Latitude.setText(String.valueOf(ll.endLat));
+            this.p2Longitude.setText(String.valueOf(ll.endLng));
+            this.updateCalcs(true);
         }
     }
 

@@ -19,6 +19,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField 'String', 'PLACES_API_KEY', GooglePlacesAPIKey
+    }
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'

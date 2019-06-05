@@ -59,9 +59,8 @@ public class LocationSearchActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         DateTime today = DateTime.now();
-        dpDialog = DatePickerDialog.newInstance(this,
+        dpDialog = new DatePickerDialog(this, this,
                 today.getYear(), today.getMonthOfYear() - 1, today.getDayOfMonth());
-
 
         dateView.setText(formatted(today));
         date = today;
@@ -89,19 +88,16 @@ public class LocationSearchActivity extends AppCompatActivity
 
     @OnClick(R.id.date)
     public void datePressed() {
-        dpDialog.show(getFragmentManager(), "daterangedialog");
+        dpDialog.show();
     }
 
     @OnClick(R.id.fab)
     public void FABPressed() {
         Intent result = new Intent();
         DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
-        locationLookup.startDate = fmt.print(startDate);
-        currentTrip.endDate = fmt.print(endDate);
-        locationLookup.origLat = location1.
         // add more code to initialize the rest of the fields
-        Parcelable parcel = Parcels.wrap(currentTrip);
-        result.putExtra("TRIP", parcel);
+        Parcelable parcel = Parcels.wrap(locationLookup);
+        result.putExtra("ll", parcel);
         setResult(RESULT_OK, result);
         finish();
     }
@@ -117,12 +113,26 @@ public class LocationSearchActivity extends AppCompatActivity
             if (resultCode == RESULT_OK) {
                 Place pl = Autocomplete.getPlaceFromIntent(data);
                 location1.setText(pl.getName());
-                currentTrip.location = pl.getName();
-                currentTrip.lat = pl.getLatLng().latitude;
-                currentTrip.lng = pl.getLatLng().longitude;
-                currentTrip.placeId = pl.getId();
+                locationLookup.origLat = pl.getLatLng().latitude;
+                locationLookup.origLng = pl.getLatLng().longitude;
 
-                Log.i(TAG, "onActivityResult: " + pl.getName() + "/" + pl.getAddress());
+                Log.i(TAG, "onActivityResult place1: " + pl.getName() + "/" + pl.getAddress());
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Status stat = Autocomplete.getStatusFromIntent(data);
+                Log.d(TAG, "onActivityResult: ");
+            } else if (requestCode == RESULT_CANCELED) {
+                System.out.println("Cancelled by the user");
+            }
+        }
+        else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE_2) {
+            if (resultCode == RESULT_OK) {
+                Place pl = Autocomplete.getPlaceFromIntent(data);
+                location2.setText(pl.getName());
+                locationLookup.endLat = pl.getLatLng().latitude;
+                locationLookup.endLng = pl.getLatLng().longitude;
+
+                Log.i(TAG, "onActivityResult place2: " + pl.getName() + "/" + pl.getAddress());
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 Status stat = Autocomplete.getStatusFromIntent(data);
