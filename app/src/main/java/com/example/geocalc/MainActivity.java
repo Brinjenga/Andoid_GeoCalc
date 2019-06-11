@@ -3,7 +3,6 @@ package com.example.geocalc;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,13 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.geocalc.dummy.HistoryContent;
 import com.google.android.libraries.places.api.Places;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.parceler.Parcels;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     public static int HISTORY_RESULT = 2;
     public static int SEARCH_RESULT = 3;
     String distUnits, bearUnits;
+    DatabaseReference topRef;
+    public static List<LocationLookup> allHistory;
+
 
     @BindView(R.id.search_button) Button btnSearch;
 
@@ -43,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Places.initialize(getApplicationContext(), BuildConfig.PLACES_API_KEY);
+        allHistory = new ArrayList<LocationLookup>();
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -80,6 +91,23 @@ public class MainActivity extends AppCompatActivity {
             closeKeyboard();
         });
     }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        allHistory.clear();
+        topRef = FirebaseDatabase.getInstance().getReference("history");
+        topRef.addChildEventListener (chEvListener);
+        //topRef.addValueEventListener(valEvListener);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        topRef.removeEventListener(chEvListener);
+    }
+
 
     @OnClick(R.id.search_button)
     public void searchPressed() {
@@ -133,11 +161,12 @@ public class MainActivity extends AppCompatActivity {
             bearUnits = data.getStringExtra("bOptions");
             updateCalcs(false);
         } else if (resultCode == HISTORY_RESULT) {
-            String[] vals = data.getStringArrayExtra("item");
-            this.p1Latitude.setText(vals[0]);
-            this.p1Longitude.setText(vals[1]);
-            this.p2Latitude.setText(vals[2]);
-            this.p2Longitude.setText(vals[3]);
+            Bundle extras = data.getExtras();
+            LocationLookup locationItem = Parcels.unwrap(extras.getParcelable("locationItem"));
+            this.p1Latitude.setText(Double.valueOf(locationItem.origLat).toString());
+            this.p1Longitude.setText(Double.valueOf(locationItem.origLng).toString());
+            this.p2Latitude.setText(Double.valueOf(locationItem.endLat).toString());
+            this.p2Longitude.setText(Double.valueOf(locationItem.endLng).toString());
             this.updateCalcs(false);
         } else if (requestCode == SEARCH_RESULT) {
             Bundle extras = data.getExtras();
@@ -161,11 +190,16 @@ public class MainActivity extends AppCompatActivity {
             double p2lat = Double.valueOf(p2Latitude.getText().toString());
             double p2long = Double.valueOf(p2Longitude.getText().toString());
             if (save) {
-                HistoryContent.HistoryItem item = new HistoryContent.HistoryItem(
-                        p1Latitude.getText().toString(), p1Longitude.getText().toString(),
-                        p2Latitude.getText().toString(), p2Longitude.getText().toString(),
-                        DateTime.now());
-                HistoryContent.addItem(item);
+
+                LocationLookup entry = new LocationLookup();
+                entry.setOrigLat(p1Lat);
+                entry.setOrigLng(p1Long);
+                entry.setEndLat(p2lat);
+                entry.setEndLng(p2long);
+                DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
+                entry.setTimestamp(fmt.print(DateTime.now()));
+                topRef.push().setValue(entry);
+
             }
             double Distance = DistanceCalculator.distance(p1Lat, p1Long, p2lat, p2long);   //calculate distance in km
             double Bearing = BearingCalculator.bearing(p1Lat, p1Long, p2lat, p2long);    //calculate bearing in deg
@@ -185,6 +219,42 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private ChildEventListener chEvListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            LocationLookup entry = (LocationLookup) dataSnapshot.getValue(LocationLookup.class);
+            entry._key = dataSnapshot.getKey();
+            allHistory.add(entry);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+            LocationLookup entry = (LocationLookup) dataSnapshot.getValue(LocationLookup.class);
+            List<LocationLookup> newHistory = new ArrayList<LocationLookup>();
+            for (LocationLookup t : allHistory) {
+                if (!t._key.equals(dataSnapshot.getKey())) {
+                    newHistory.add(t);
+                }
+            }
+            allHistory = newHistory;
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
 }
 
 

@@ -2,13 +2,13 @@ package com.example.geocalc;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-import com.example.geocalc.dummy.HistoryContent;
+import org.parceler.Parcels;
 
 public class HistoryActivity extends AppCompatActivity
         implements HistoryFragment.OnListFragmentInteractionListener {
@@ -21,21 +21,18 @@ public class HistoryActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
     }
 
     @Override
-    public void onListFragmentInteraction(HistoryContent.HistoryItem item) {
+    public void onListFragmentInteraction(LocationLookup item) {
         System.out.println("Interact!");
         Intent intent = new Intent();
-        String[] vals = {item.origLat, item.origLng, item.destLat, item.destLng};
-        intent.putExtra("item", vals);
+        LocationLookup locationItem = new LocationLookup();
+        locationItem.origLat =
+        Parcelable parcel = Parcels.wrap(locationItem);
+        intent.putExtra("locationItem", parcel);
         setResult(MainActivity.HISTORY_RESULT,intent);
         finish();
     }

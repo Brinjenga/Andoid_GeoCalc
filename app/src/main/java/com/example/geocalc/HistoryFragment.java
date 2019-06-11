@@ -11,8 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.geocalc.dummy.HistoryContent;
-import com.example.geocalc.dummy.HistoryContent.HistoryItem;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -27,12 +26,15 @@ public class HistoryFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    List<LocationLookup> allHistory;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public HistoryFragment() {
+        allHistory = MainActivity.allHistory;
     }
 
     // TODO: Customize parameter initialization
@@ -42,7 +44,9 @@ public class HistoryFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
+
         return fragment;
+
     }
 
     @Override
@@ -71,7 +75,7 @@ public class HistoryFragment extends Fragment {
             DividerItemDecoration did = new DividerItemDecoration(recyclerView.getContext(),
                     DividerItemDecoration.VERTICAL);
             recyclerView.addItemDecoration(did);
-            recyclerView.setAdapter(new HistoryAdapter(HistoryContent.ITEMS, mListener));
+            recyclerView.setAdapter(new HistoryAdapter(allHistory, mListener));
         }
         return view;
     }
@@ -106,6 +110,6 @@ public class HistoryFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(HistoryItem item);
+        void onListFragmentInteraction(LocationLookup item);
     }
 }
