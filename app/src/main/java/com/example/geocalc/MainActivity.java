@@ -162,11 +162,11 @@ public class MainActivity extends AppCompatActivity {
             updateCalcs(false);
         } else if (resultCode == HISTORY_RESULT) {
             Bundle extras = data.getExtras();
-            LocationLookup locationItem = Parcels.unwrap(extras.getParcelable("locationItem"));
-            this.p1Latitude.setText(Double.valueOf(locationItem.origLat).toString());
-            this.p1Longitude.setText(Double.valueOf(locationItem.origLng).toString());
-            this.p2Latitude.setText(Double.valueOf(locationItem.endLat).toString());
-            this.p2Longitude.setText(Double.valueOf(locationItem.endLng).toString());
+           double [] locations = data.getDoubleArrayExtra("locationItem");
+            this.p1Latitude.setText(Double.valueOf(locations[0]).toString());
+            this.p1Longitude.setText(Double.valueOf(locations[1]).toString());
+            this.p2Latitude.setText(Double.valueOf(locations[2]).toString());
+            this.p2Longitude.setText(Double.valueOf(locations[3]).toString());
             this.updateCalcs(false);
         } else if (requestCode == SEARCH_RESULT) {
             Bundle extras = data.getExtras();

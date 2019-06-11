@@ -8,7 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+
 import org.parceler.Parcels;
+
+import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity
         implements HistoryFragment.OnListFragmentInteractionListener {
@@ -20,6 +23,7 @@ public class HistoryActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
@@ -29,10 +33,8 @@ public class HistoryActivity extends AppCompatActivity
     public void onListFragmentInteraction(LocationLookup item) {
         System.out.println("Interact!");
         Intent intent = new Intent();
-        LocationLookup locationItem = new LocationLookup();
-        locationItem.origLat =
-        Parcelable parcel = Parcels.wrap(locationItem);
-        intent.putExtra("locationItem", parcel);
+        Double[] locations = {item.origLat, item.origLng, item.endLat, item.endLng};
+        intent.putExtra("locationItem", locations);
         setResult(MainActivity.HISTORY_RESULT,intent);
         finish();
     }
