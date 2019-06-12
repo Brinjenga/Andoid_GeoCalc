@@ -6,6 +6,8 @@ import android.content.Context;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.example.geocalc.BuildConfig;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,7 +30,7 @@ public class WeatherService extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String ACTION_WEATHER_AT = "cis.gvsu.edu.geocalculator.webservice.action.WEATHER_AT";
-    private static final String BASE_URL = "https://api.darksky.net/forecast/YOUR-DARK-SKY-API-KEY-GOES-HERE";
+    private static final String BASE_URL = "https://api.darksky.net/forecast/" + BuildConfig.DARK_SKY_API_KEY;
     public static final String BROADCAST_WEATHER = "cis.gvsu.edu.geocalculator.webservice.action.BROADCAST";
     // TODO: Rename parameters
     private static final String EXTRA_KEY = "cis.gvsu.edu.geocalculator.webservice.extra.KEY";
@@ -97,9 +99,9 @@ public class WeatherService extends IntentService {
                 JSONObject data = new JSONObject(new String(baos.toByteArray()));
                 JSONObject current = data.getJSONObject("currently");
 
-                String condition = current.getString("currently");
-                String icon = current.getString("summary");
-                double temp = current.getDouble("temparature");
+                String condition = current.getString("summary");
+                String icon = current.getString("icon");
+                double temp = current.getDouble("temperature");
                 
                 Intent result = new Intent(BROADCAST_WEATHER);
 

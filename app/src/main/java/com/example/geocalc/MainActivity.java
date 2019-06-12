@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 p1Summary.setText(summary);
                 p1Temp.setText(Double.toString(temp));
                 p1Icon.setImageResource(resID);
-                p1Icon.setVisibility(View.INVISIBLE);
             } else {
                 p2Summary.setText(summary);
                 p2Temp.setText(Double.toString(temp));
