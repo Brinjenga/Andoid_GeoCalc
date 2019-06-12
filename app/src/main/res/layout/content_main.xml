@@ -134,4 +134,64 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/weatherIcon1"
+        android:layout_width="80"
+        android:layout_height="80"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblBearing"
+        app:srcCompat="@drawable/clear_day" />
+
+    <ImageView
+        android:id="@+id/weatherIcon2"
+        android:layout_width="80"
+        android:layout_height="80"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weatherIcon1"
+        app:srcCompat="@drawable/clear_day" />
+
+    <TextView
+        android:id="@+id/temp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/weatherIcon1"
+        app:layout_constraintTop_toTopOf="@+id/weatherIcon1" />
+
+    <TextView
+        android:id="@+id/descr1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/weatherIcon1"
+        app:layout_constraintStart_toEndOf="@+id/weatherIcon1" />
+
+    <TextView
+        android:id="@+id/temp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/weatherIcon2"
+        app:layout_constraintTop_toTopOf="@+id/weatherIcon2" />
+
+    <TextView
+        android:id="@+id/descr2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/weatherIcon2"
+        app:layout_constraintStart_toEndOf="@+id/weatherIcon2" />
 </android.support.constraint.ConstraintLayout>
