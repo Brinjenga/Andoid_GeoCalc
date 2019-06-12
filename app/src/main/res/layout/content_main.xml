@@ -137,8 +137,8 @@
 
     <ImageView
         android:id="@+id/weatherIcon1"
-        android:layout_width="80"
-        android:layout_height="80"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -147,8 +147,8 @@
 
     <ImageView
         android:id="@+id/weatherIcon2"
-        android:layout_width="80"
-        android:layout_height="80"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +156,7 @@
         app:srcCompat="@drawable/clear_day" />
 
     <TextView
-        android:id="@+id/temp2"
+        android:id="@+id/temp1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

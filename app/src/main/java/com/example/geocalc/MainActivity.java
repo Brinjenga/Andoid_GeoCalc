@@ -1,18 +1,24 @@
 package com.example.geocalc;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.geocalc.webservice.WeatherService;
 import com.google.android.libraries.places.api.Places;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +39,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.geocalc.webservice.WeatherService.BROADCAST_WEATHER;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText p1Latitude, p1Longitude, p2Latitude, p2Longitude;   // instantiating input fields
@@ -45,8 +53,37 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference topRef;
     public static List<LocationLookup> allHistory;
 
+    @BindView(R.id.weatherIcon1) ImageView p1Icon;
+    @BindView(R.id.weatherIcon2) ImageView p2Icon;
+    @BindView(R.id.temp1) TextView p1Temp;
+    @BindView(R.id.temp2) TextView p2Temp;
+    @BindView(R.id.descr1) TextView p1Summary;
+    @BindView(R.id.descr2) TextView p2Summary;
 
     @BindView(R.id.search_button) Button btnSearch;
+
+    private BroadcastReceiver weatherReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            double temp = bundle.getDouble("TEMPERATURE");
+            String summary = bundle.getString("SUMMARY");
+            String icon = bundle.getString("ICON").replaceAll("-", "_");
+            String key = bundle.getString("KEY");
+            int resID = getResources().getIdentifier(icon , "drawable", getPackageName());
+            setWeatherViews(View.VISIBLE);
+            if (key.equals("p1"))  {
+                p1Summary.setText(summary);
+                p1Temp.setText(Double.toString(temp));
+                p1Icon.setImageResource(resID);
+                p1Icon.setVisibility(View.INVISIBLE);
+            } else {
+                p2Summary.setText(summary);
+                p2Temp.setText(Double.toString(temp));
+                p2Icon.setImageResource(resID);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             p2Longitude.setText("");
             distanceResult.setText("Distance: ");   //set labels back to original text
             bearingResult.setText("Bearing: ");
+            setWeatherViews(View.INVISIBLE);
             closeKeyboard();
         });
     }
@@ -97,17 +135,29 @@ public class MainActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         allHistory.clear();
+        IntentFilter weatherFilter = new IntentFilter(BROADCAST_WEATHER);
+        LocalBroadcastManager.getInstance(this).registerReceiver(weatherReceiver, weatherFilter);
         topRef = FirebaseDatabase.getInstance().getReference("history");
         topRef.addChildEventListener (chEvListener);
         //topRef.addValueEventListener(valEvListener);
+        setWeatherViews(View.INVISIBLE);
     }
 
     @Override
     public void onPause(){
         super.onPause();
         topRef.removeEventListener(chEvListener);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(weatherReceiver);
     }
 
+    private void setWeatherViews(int visible) {
+        p1Icon.setVisibility(visible);
+        p2Icon.setVisibility(visible);
+        p1Summary.setVisibility(visible);
+        p2Summary.setVisibility(visible);
+        p1Temp.setVisibility(visible);
+        p2Temp.setVisibility(visible);
+    }
 
     @OnClick(R.id.search_button)
     public void searchPressed() {
@@ -189,6 +239,10 @@ public class MainActivity extends AppCompatActivity {
             double p1Long = Double.valueOf(p1Longitude.getText().toString());
             double p2lat = Double.valueOf(p2Latitude.getText().toString());
             double p2long = Double.valueOf(p2Longitude.getText().toString());
+
+            WeatherService.startGetWeather(this, Double.toString(p1Lat), Double.toString(p1Long), "p1");
+            WeatherService.startGetWeather(this, Double.toString(p2lat), Double.toString(p2long), "p2");
+
             if (save) {
 
                 LocationLookup entry = new LocationLookup();
