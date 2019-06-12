@@ -33,7 +33,7 @@ public class HistoryActivity extends AppCompatActivity
     public void onListFragmentInteraction(LocationLookup item) {
         System.out.println("Interact!");
         Intent intent = new Intent();
-        Double[] locations = {item.origLat, item.origLng, item.endLat, item.endLng};
+        double[] locations = {item.origLat, item.origLng, item.endLat, item.endLng};
         intent.putExtra("locationItem", locations);
         setResult(MainActivity.HISTORY_RESULT,intent);
         finish();
